@@ -1,4 +1,4 @@
-'use strict';
+`use strict`;
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -35,6 +35,10 @@ const TenantSchema = new Schema({
    },
    floor: {
       type: Number
+   },
+   apartment_id: {
+      type: String,
+      Required: [true, 'apartment_id is required']
    }
 });
 

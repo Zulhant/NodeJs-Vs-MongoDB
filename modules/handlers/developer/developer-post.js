@@ -1,19 +1,20 @@
 `use strict`;
 
 const express = require('express');
-const TempApartment = require('../../models/apartment');
-const requestApartment = require('../../structure/apartment');
+const tempProvider = require('../../models/developer');
+const requestDeveloper = require('../../structure/developer');
 
-exports.insertApartment = (req, res) => {
+exports.insertDeveloper = (req, res) => {
    try {
-      for (let i = 1; i < 10; i++) {
-         TempApartment.create(requestApartment).then((apartment) => {
+      for (let i = 1; i < 20; i++) {
+         tempProvider.create(requestDeveloper).then((developer) => {
             res.jsonp({
                code: 200,
                msg: 'success'
             })
          })
       }
+
    } catch (error) {
       res.jsonp({
          code: 401,

@@ -1,4 +1,4 @@
-'use strict';
+`use strict`;
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -14,13 +14,15 @@ const providerSchema = new Schema({
       required: [true, 'address is required']
    },
    location: {
-      type: object
+      type: Object,
+      required: [true, 'location is required']
    },
    operation_time: {
       type: Array
    },
    services: {
-      type: Array
+      type: Array,
+      required: [true, 'services is required']
    },
    rating: {
       type: Number
@@ -34,6 +36,10 @@ const providerSchema = new Schema({
    },
    picture: {
       type: String
+   },
+   type: {
+      type: String,
+      required: [true, 'type Provider is required']
    }
 });
 
