@@ -3,21 +3,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const TmpSchema = new Schema({
+const TenantSchema = new Schema({
    fullName: {
-      type: String
+      type: String,
+      required: [true, 'fullName Is Required']
    },
    address: {
       type: String
    },
    phoneNumber: {
-      type: String
+      type: Number,
+      required: [true, 'PhoneNumber Is Required']
    },
    NIK: {
-      type: String
+      type: String,
+      required: [true, 'NIK Is Required']
    },
    email: {
-      type: String
+      type: String,
+      required: [true, 'email Is Required']
    },
    gender: {
       type: String
@@ -26,14 +30,14 @@ const TmpSchema = new Schema({
       type: String
    },
    unitNumber: {
-      type: String
+      type: Number,
+      required: [true, 'UnitNumber Is Required']
    },
    floor: {
-      type: String
+      type: Number
    }
 });
 
-const tempTenant = mongoose.model('tenant', TmpSchema);
-
+const tempTenant = mongoose.model('tenant', TenantSchema);
 module.exports = tempTenant;
 

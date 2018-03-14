@@ -1,18 +1,16 @@
 const express = require('express');
 const tempTenant = require('../../models/tenant');
+const { randomName, Nik, depan, belakang } = require('../../config/params')
 
 
 exports.insertData = (req, res, next) => {
-   for (let i = 1; i < 100; i++) {
-      const dataName = ['muhammad', 'ari', 'yudoyono', 'zainaul'];
-      const name = Math.random() * dataName.length - 1;
-
+   for (let i = 0; i < 100; i++) {
       const request = {
-         fullName: name,
-         NIK: 773833,
+         fullName: `${depan} ${belakang}`,
+         NIK: Nik,
          address: "Jalan Raya Jati Padanng",
          phoneNumber: "373737373",
-         email: "hari@yahoo.com",
+         email: `${depan}@gmail.com`,
          gender: "L",
          type: "Sewa",
          unitNumber: "36",
@@ -24,10 +22,14 @@ exports.insertData = (req, res, next) => {
             code: 200,
             msg: 'success'
          })
-      }).catch(next);
+      }).catch(error => {
+         res.jsonp({
+            code: 400,
+            msg: error
+         })
+      });
 
    }
-
 }
 
 
