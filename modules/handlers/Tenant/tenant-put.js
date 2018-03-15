@@ -3,22 +3,21 @@
 const express = require('express');
 const TempTenant = require('../../models/tenant');
 const { TENANT_ID } = require('../../config/configuration');
+const ResponGenerator = require('../../helpers/respon');
 
 exports.updateTenant = (req, res) => {
    const tenantId = req.params[TENANT_ID];
    try {
       TempTenant.findByIdAndUpdate({ _id: tenantId }, req.body).then(() => {
-         res.jsonp({
-            code: 200,
-            msg: 'success'
-         })
+         res.jsonp(
+            ResponGenerator.success()
+         );
       })
 
    } catch (error) {
-      res.jsonp({
-         code: 400,
-         msg: error
-      })
+      res.jsonp(
+         ResponGenerator.bad_request(error)
+      );
    }
 }
 

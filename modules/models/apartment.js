@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ApartmentSchema = new Schema({
+   _id: {
+      type: Object,
+      require: [true, 'id is required']
+   },
    name: {
       type: String,
       required: [true, 'name is required']

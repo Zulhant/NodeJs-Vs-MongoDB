@@ -1,21 +1,27 @@
 const express = require('express');
 const tempTenant = require('../../models/tenant');
-const { TENANT_ID, APARTMENT_ID, TENANT_TYPE } = require('../../config/configuration');
+const { TENANT_ID, APARTMENT_ID, TENANT_TYPE, PAGE } = require('../../config/configuration');
+const ResponGenerator = require('../../helpers/respon');
 
 exports.getAllData = (req, res) => {
+   const perpage = 3;
+   const page = req.params[PAGE] || 1
    try {
-      tempTenant.find().then((tenants) => {
-         res.jsonp({
-            code: 200,
-            msg: 'success',
-            payload: tenants
-         })
-      })
+      tempTenant.find()
+         .skip((perpage * page) - perpage)
+         .limit(perpage)
+         .then((tenants) => {
+            tempTenant.count().exec((err, count) => {
+               const pages = Math.ceil(count / perpage)
+               res.jsonp(
+                  ResponGenerator.success(tenants, pages)
+               );
+            })
+         });
    } catch (error) {
-      res.jsonp({
-         code: 400,
-         msg: error
-      })
+      res.jsonp(
+         ResponGenerator.bad_request(error)
+      );
    }
 }
 
@@ -23,17 +29,14 @@ exports.getOneData = (req, res) => {
    const idTenant = req.params[TENANT_ID];
    try {
       tempTenant.findOne({ _id: idTenant }).then((tenant => {
-         res.jsonp({
-            code: 200,
-            msg: 'success',
-            payload: tenant
-         })
+         res.jsonp(
+            ResponGenerator.success(tenant)
+         );
       }))
    } catch (error) {
-      res.jsonp({
-         code: 400,
-         msg: error
-      })
+      res.jsonp(
+         ResponGenerator.bad_request(error)
+      );
    }
 }
 
@@ -41,17 +44,18 @@ exports.getApartmentOFTenants = (req, res) => {
    const apartmentId = req.params[APARTMENT_ID];
    try {
       tempTenant.find({ apartment_id: apartmentId }).then((tenants) => {
-         res.jsonp({
-            code: 200,
-            msg: 'success',
-            paylod: tenants
-         })
-      })
+         res.jsonp(
+            ResponGenerator.success(tenants)
+         );
+      }).catch(err => {
+         res.jsonp(
+            ResponGenerator.not_found()
+         );
+      });
    } catch (error) {
-      res.jsonp({
-         code: 400,
-         msg: error
-      })
+      res.jsonp(
+         ResponGenerator.bad_request(error)
+      );
    }
 }
 
@@ -60,17 +64,14 @@ exports.getApartmentOFTenant = (req, res) => {
    const tenantId = req.params[TENANT_ID];
    try {
       tempTenant.find({ _id: tenantId, apartment_id: apartmentId }).then((tenant) => {
-         res.jsonp({
-            code: 200,
-            msg: 'success',
-            paylod: tenant
-         })
+         res.jsonp(
+            ResponGenerator.success(tenant)
+         );
       })
    } catch (error) {
-      res.jsonp({
-         code: 400,
-         msg: error
-      })
+      res.jsonp(
+         ResponGenerator.bad_request(error)
+      );
    }
 }
 

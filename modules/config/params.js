@@ -5,5 +5,5 @@ let Nik = Math.random().toString().replace('0.', '');
 let depan = randomName.substr(0, 5)
 let belakang = randomName.substr(5, randomName.length)
 
-module.exports = { randomName, Nik, depan, belakang }
 
+module.exports = { randomName, Nik, depan, belakang }

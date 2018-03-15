@@ -1,6 +1,6 @@
 `use strict`;
 const express = require('express');
-const { depan } = require('../config/params');
+// const { depan } = require('../config/params');
 
 requestApartment = {
    name: depan,
