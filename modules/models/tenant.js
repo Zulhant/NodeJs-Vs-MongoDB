@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TenantSchema = new Schema({
-   fullName: {
+   firstName: {
+      type: String,
+      required: [true, 'fullName Is Required']
+   },
+   lastName: {
       type: String,
       required: [true, 'fullName Is Required']
    },
@@ -12,36 +16,50 @@ const TenantSchema = new Schema({
       type: String
    },
    phoneNumber: {
-      type: Number,
+      type: String,
+      unique: true,
       required: [true, 'PhoneNumber Is Required']
    },
    NIK: {
-      type: String,
-      required: [true, 'NIK Is Required']
+      type: Number,
+      unique: true
    },
    email: {
       type: String,
-      required: [true, 'email Is Required']
+      required: [true, 'email Is Required'],
+      unique: true
    },
    gender: {
-      type: String
+      type: String,
+      enum: ['L', 'P'],
+      required: [true, 'gender Is Required'],
    },
-   type: {
-      type: String
+   residenceStatus: {
+      type: String,
+      enum: ['Sewa', 'Owner'],
+      required: [true, 'residenceStatus Is Required']
    },
    unitNumber: {
-      type: Number,
-      required: [true, 'UnitNumber Is Required']
+      type: String,
+      required: [true, 'UnitNumber Is Required'],
+      unique: true,
+      ensureIndex: 1
    },
    floor: {
-      type: Number
+      type: Number,
+      required: [true, 'floor Is Required']
    },
-   apartment_id: {
+   towerName: {
       type: String,
+      required: [true, 'towerName is required']
+   },
+   apartmentId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Apartment',
       Required: [true, 'apartment_id is required']
    }
 });
 
-const tempTenant = mongoose.model('tenant', TenantSchema);
-module.exports = tempTenant;
+const Tenant = mongoose.model('Tenant', TenantSchema);
+module.exports = Tenant;
 

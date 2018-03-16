@@ -4,30 +4,33 @@ const Schema = mongoose.Schema;
 
 
 const developerSchema = new Schema({
+
    name: {
       type: String,
       required: [true, 'name is required']
    },
    address: {
-      type: String
+      type: String,
+      required: [true, 'address is required'],
+      min: 10
    },
-   phoneNumber: {
+   phoneNumber: [{
       type: Number,
       required: [true, 'phoneNumber is required']
-   },
+   }],
    email: {
       type: String,
-      required: [true, 'email is required']
+      required: [true, 'email is required'],
+      unique: true
    },
    desc: {
-      type: String
-   },
-   type: {
-      type: String
+      type: String,
+      min: 10
    }
+
 });
 
-const tempProvider = mongoose.model('developer', developerSchema);
-module.exports = tempProvider;
+const Developer = mongoose.model('Developer', developerSchema);
+module.exports = Developer;
 
 

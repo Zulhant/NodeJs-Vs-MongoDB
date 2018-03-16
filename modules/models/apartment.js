@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const ApartmentSchema = new Schema({
    _id: {
-      type: Object,
+      type: Schema.Types.ObjectId,
       require: [true, 'id is required']
    },
    name: {
@@ -24,11 +24,40 @@ const ApartmentSchema = new Schema({
       type: Object,
       require: [true, 'location is required']
    },
-   management_id: {
-      type: String,
+   managementId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Management',
       require: [true, 'management_id is required']
-   }
+   },
+   numOfTower: {
+      type: Number,
+      require: [true, 'numOfTower is required']
+   },
+   numOfUnit: {
+      type: Number,
+      require: [true, 'numOfUnit is required']
+   },
+   numOfTenant: {
+      type: Number
+
+   },
+   totalArea: {
+      type: Number
+   },
+   facilities: [{
+      name: {
+         Type: String,
+         require: [true, 'name is required']
+      },
+      desc: {
+         type: String,
+         require: [true, 'desc is required'],
+         min: 10
+      },
+      picture: [String]
+   }]
+
 })
 
-const TempApartment = mongoose.model('apartment', ApartmentSchema);
+const TempApartment = mongoose.model('Apartment', ApartmentSchema);
 module.exports = TempApartment;
